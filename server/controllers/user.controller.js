@@ -106,6 +106,10 @@ exports.login = asyncHandler(async(req,res)=>{
 
 //findbyId
 exports.getUser = asyncHandler(async (req,res)=>{
+    const {userId} = req.params;
+    if(!userId){
+        throw new ApiError(400,"userId is required!");
+    }
     const user = await User.findById(req.params.userId);
     if(!user){
         throw new ApiError(404 , "user not found");
@@ -113,6 +117,28 @@ exports.getUser = asyncHandler(async (req,res)=>{
     user.password = undefined;
     return res.status(200).json(
         new ApiResponse("user is" , user)
+    )
+})
+
+exports.deleteUser = asyncHandler(async (req,res)=>{
+    const {userId} = req.params;
+    if(!userId){
+        throw new ApiError(400,"userId is required!");
+    }
+    const user = await User.findByIdAndDelete(req.params.userId);
+    if(!user){
+        throw new ApiError(404 , "user not found");
+    }
+    return res.status(204).json()
+})
+
+exports.getUsers = asyncHandler(async (req,res)=>{
+    const users = await User.find({role:"Agent"});
+    if(users.length === 0){
+        throw new ApiError(404 , "user not found");
+    }
+    return res.status(200).json(
+        new ApiResponse(200 , "users are " , users)
     )
 })
 

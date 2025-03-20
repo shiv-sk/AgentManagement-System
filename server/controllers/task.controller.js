@@ -55,3 +55,19 @@ exports.tasksOfUser = asyncHandler(async(req , res)=>{
         new apiResponse(200 , "tasks for you! " , tasks)
     )
 })
+
+exports.getTask = asyncHandler(async(req , res)=>{
+    const {taskId} = req.params;
+    if(!taskId){
+        throw new apiError(400 , "userId is required! ");
+    }
+    const task = await Task.findById(taskId);
+    if(!task){
+        return res.status(404).json(
+            new apiResponse(404 , "task not found! " , {})
+        )
+    }
+    return res.status(200).json(
+        new apiResponse(200 , "task is! " , task)
+    )
+})
