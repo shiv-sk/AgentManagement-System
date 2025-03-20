@@ -67,5 +67,10 @@ node index.js
 - They can view their assigned tasks.
 - They can update their profile.
 
+### Default Credentials
+Email: admin@email.com
+Password: admin123
+Note: You can change the admin credentials by modifying the DbConnection file in the server folder. 
+
 ### DemoVideo
 [video](https://vimeo.com/1067726924?share=copy#t=0)
